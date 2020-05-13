@@ -1,6 +1,7 @@
 package ru.momentum.finstrument.api.bitrix.data;
 
 import com.google.gson.annotations.SerializedName;
+import ru.momentum.finstrument.platform.model.entity.Department;
 
 import java.util.List;
 

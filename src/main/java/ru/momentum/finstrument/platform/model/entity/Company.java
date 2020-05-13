@@ -1,0 +1,35 @@
+package ru.momentum.finstrument.platform.model.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+@Data
+@Entity
+@Table(name = "Companies")
+@NoArgsConstructor
+@AllArgsConstructor
+public class Company {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private int id;
+
+    @Column(name = "address")
+    private String address;
+
+    public Company(String address) {
+        this.address = address;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+}

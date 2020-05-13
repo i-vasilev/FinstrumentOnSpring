@@ -1,4 +1,4 @@
-package ru.momentum.finstrument.api.bitrix.data;
+package ru.momentum.finstrument.platform.model.entity;
 
 import com.google.gson.annotations.SerializedName;
 

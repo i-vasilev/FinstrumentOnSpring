@@ -1,6 +1,5 @@
 package ru.momentum.finstrument.api;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import ru.momentum.finstrument.api.bitrix.credentials.Credentials;
 import ru.momentum.finstrument.api.bitrix.data.ListDeals;

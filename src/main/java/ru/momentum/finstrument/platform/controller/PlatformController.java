@@ -13,8 +13,16 @@ import ru.momentum.finstrument.api.bitrix.data.ListDeals;
 import ru.momentum.finstrument.api.bitrix.data.ListDepartments;
 import ru.momentum.finstrument.api.bitrix.data.ListUsers;
 import ru.momentum.finstrument.api.bitrix.httpClient.BitrixApiException;
+import ru.momentum.finstrument.platform.model.data.CompanyRepository;
+import ru.momentum.finstrument.platform.model.data.DepartmentRepository;
+import ru.momentum.finstrument.platform.model.data.UserRepository;
+import ru.momentum.finstrument.platform.model.entity.Company;
+import ru.momentum.finstrument.platform.model.entity.Department;
+import ru.momentum.finstrument.platform.model.entity.User;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @Scope("session")
@@ -29,9 +37,17 @@ public class PlatformController {
     public static final String REDIRECT = "redirect:";
 
     private final AnnotationConfigApplicationContext annotationConfigApplicationContext;
+    private final CompanyRepository companyRepository;
+    private final DepartmentRepository departmentRepository;
+    private final UserRepository userRepository;
 
-    public PlatformController() {
+
+    public PlatformController(CompanyRepository companyRepository, DepartmentRepository departmentRepository, UserRepository userRepository) {
         annotationConfigApplicationContext = new AnnotationConfigApplicationContext(ApiConfiguration.class);
+        this.departmentRepository = departmentRepository;
+        this.companyRepository = companyRepository;
+        this.userRepository = userRepository;
+
     }
 
     private String getCodeUrl(String domain, String appId) {
@@ -64,13 +80,36 @@ public class PlatformController {
             } else {
                 final Api client = annotationConfigApplicationContext.getBean(BitrixApi.class);
                 client.loadAuthToken(appId, clientSecret, code);
+                Company company = new Company(domain);
                 final ListDeals listDeals = client.loadListDeals();
-                final ListUsers listUsers = client.loadListUsers();
                 final ListDepartments listDepartments = client.loadListDepartments();
+                final ListUsers listUsers = client.loadListUsers();
+
+                processingCompany(company, listDepartments, listUsers);
             }
         } catch (BitrixApiException e) {
             e.printStackTrace();
         }
         return GET_ACCESS_KEYS;
+    }
+
+    private void processingCompany(Company company, ListDepartments listDepartments, ListUsers listUsers) {
+        if (companyRepository.findByAddress(company.getAddress()) == null) {
+            company = companyRepository.save(company);
+            Map<Integer, Integer> fids = new HashMap<>();
+            for (Department department : listDepartments.getDepartments()) {
+                department.setCompanyId(company.getId());
+                int depFID = fids.getOrDefault(department.getParentID(), 0);
+                int bId = department.getId();
+                department.setParentID(depFID);
+                department = departmentRepository.save(department);
+                fids.putIfAbsent(bId, department.getFid());
+            }
+            for (User user :
+                    listUsers.getUsers()) {
+                user.setDepartment(fids.get(user.getDepartment()));
+                user = userRepository.save(user);
+            }
+        }
     }
 }
