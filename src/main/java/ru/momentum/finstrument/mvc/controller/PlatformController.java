@@ -1,4 +1,4 @@
-package ru.momentum.finstrument.platform.controller;
+package ru.momentum.finstrument.mvc.controller;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -13,12 +13,12 @@ import ru.momentum.finstrument.api.bitrix.data.ListDeals;
 import ru.momentum.finstrument.api.bitrix.data.ListDepartments;
 import ru.momentum.finstrument.api.bitrix.data.ListUsers;
 import ru.momentum.finstrument.api.bitrix.httpClient.BitrixApiException;
-import ru.momentum.finstrument.platform.model.data.CompanyRepository;
-import ru.momentum.finstrument.platform.model.data.DepartmentRepository;
-import ru.momentum.finstrument.platform.model.data.UserRepository;
-import ru.momentum.finstrument.platform.model.entity.Company;
-import ru.momentum.finstrument.platform.model.entity.Department;
-import ru.momentum.finstrument.platform.model.entity.User;
+import ru.momentum.finstrument.mvc.model.data.CompanyRepository;
+import ru.momentum.finstrument.mvc.model.data.DepartmentRepository;
+import ru.momentum.finstrument.mvc.model.data.UserRepository;
+import ru.momentum.finstrument.mvc.model.entity.Company;
+import ru.momentum.finstrument.mvc.model.entity.Department;
+import ru.momentum.finstrument.mvc.model.entity.User;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;

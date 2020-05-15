@@ -1,7 +1,7 @@
 package ru.momentum.finstrument.api.bitrix.deserializer;
 
 import com.google.gson.*;
-import ru.momentum.finstrument.platform.model.entity.User;
+import ru.momentum.finstrument.mvc.model.entity.User;
 
 import java.lang.reflect.Type;
 

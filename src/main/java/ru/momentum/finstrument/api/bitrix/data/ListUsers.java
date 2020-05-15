@@ -1,7 +1,7 @@
 package ru.momentum.finstrument.api.bitrix.data;
 
 import com.google.gson.annotations.SerializedName;
-import ru.momentum.finstrument.platform.model.entity.User;
+import ru.momentum.finstrument.mvc.model.entity.User;
 
 import java.util.List;
 

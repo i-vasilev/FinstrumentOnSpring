@@ -1,4 +1,4 @@
-package ru.momentum.finstrument.platform.model.entity;
+package ru.momentum.finstrument.mvc.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,11 +1,9 @@
-package ru.momentum.finstrument.platform.model.entity;
+package ru.momentum.finstrument.mvc.model.entity;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity

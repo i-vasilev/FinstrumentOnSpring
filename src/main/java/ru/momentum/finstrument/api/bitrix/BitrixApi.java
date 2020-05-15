@@ -15,7 +15,7 @@ import ru.momentum.finstrument.api.bitrix.deserializer.UserDeserializer;
 import ru.momentum.finstrument.api.bitrix.httpClient.BitrixApiException;
 import ru.momentum.finstrument.api.bitrix.httpClient.BitrixClientImpl;
 import ru.momentum.finstrument.api.bitrix.httpClient.BitrixHttpClient;
-import ru.momentum.finstrument.platform.model.entity.User;
+import ru.momentum.finstrument.mvc.model.entity.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
