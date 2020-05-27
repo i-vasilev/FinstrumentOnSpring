@@ -1,4 +1,4 @@
-package ru.momentum.finstrument.mvc.model.entity;
+package ru.momentum.finstrument.core.entity;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;

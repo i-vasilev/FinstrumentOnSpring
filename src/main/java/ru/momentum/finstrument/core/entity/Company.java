@@ -1,4 +1,4 @@
-package ru.momentum.finstrument.mvc.model.entity;
+package ru.momentum.finstrument.core.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +20,9 @@ public class Company {
 
     @Column(name = "address")
     private String address;
+
+    @Column(name = "user")
+    private User user;
 
     public Company(String address) {
         this.address = address;

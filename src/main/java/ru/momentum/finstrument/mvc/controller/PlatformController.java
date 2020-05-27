@@ -1,5 +1,6 @@
 package ru.momentum.finstrument.mvc.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -9,20 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.momentum.finstrument.api.Api;
 import ru.momentum.finstrument.api.ApiConfiguration;
 import ru.momentum.finstrument.api.bitrix.BitrixApi;
-import ru.momentum.finstrument.api.bitrix.data.ListDeals;
-import ru.momentum.finstrument.api.bitrix.data.ListDepartments;
-import ru.momentum.finstrument.api.bitrix.data.ListUsers;
+import ru.momentum.finstrument.core.entity.ListDeals;
+import ru.momentum.finstrument.core.entity.ListDepartments;
+import ru.momentum.finstrument.core.entity.ListEmployees;
 import ru.momentum.finstrument.api.bitrix.httpClient.BitrixApiException;
-import ru.momentum.finstrument.mvc.model.data.CompanyRepository;
-import ru.momentum.finstrument.mvc.model.data.DepartmentRepository;
-import ru.momentum.finstrument.mvc.model.data.UserRepository;
-import ru.momentum.finstrument.mvc.model.entity.Company;
-import ru.momentum.finstrument.mvc.model.entity.Department;
-import ru.momentum.finstrument.mvc.model.entity.User;
+import ru.momentum.finstrument.core.db.DBController;
+import ru.momentum.finstrument.core.entity.Company;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @Scope("session")
@@ -35,19 +30,16 @@ public class PlatformController {
     public static final String CODE = "code";
     public static final String GET_ACCESS_KEYS = "getAccessKeys";
     public static final String REDIRECT = "redirect:";
+    public static final String ADD_COMPANY = "addCompany";
 
     private final AnnotationConfigApplicationContext annotationConfigApplicationContext;
-    private final CompanyRepository companyRepository;
-    private final DepartmentRepository departmentRepository;
-    private final UserRepository userRepository;
 
+    @Autowired
+    private final DBController dbController;
 
-    public PlatformController(CompanyRepository companyRepository, DepartmentRepository departmentRepository, UserRepository userRepository) {
+    public PlatformController(DBController dbController) {
         annotationConfigApplicationContext = new AnnotationConfigApplicationContext(ApiConfiguration.class);
-        this.departmentRepository = departmentRepository;
-        this.companyRepository = companyRepository;
-        this.userRepository = userRepository;
-
+        this.dbController = dbController;
     }
 
     private String getCodeUrl(String domain, String appId) {
@@ -57,6 +49,15 @@ public class PlatformController {
     @GetMapping("/")
     public String indexPage() {
         return INDEX;
+    }
+
+    @GetMapping("/addCompany")
+    public String addCompanyPage() {
+        return ADD_COMPANY;
+    }
+    @PostMapping("/addCompany")
+    public String addCompanyPostPage() {
+        return ADD_COMPANY;
     }
 
     @PostMapping("/getCode")
@@ -83,33 +84,13 @@ public class PlatformController {
                 Company company = new Company(domain);
                 final ListDeals listDeals = client.loadListDeals();
                 final ListDepartments listDepartments = client.loadListDepartments();
-                final ListUsers listUsers = client.loadListUsers();
+                final ListEmployees listEmployees = client.loadListEmployees();
 
-                processingCompany(company, listDepartments, listUsers);
+                dbController.processingCompany(company, listDepartments, listEmployees);
             }
         } catch (BitrixApiException e) {
             e.printStackTrace();
         }
         return GET_ACCESS_KEYS;
-    }
-
-    private void processingCompany(Company company, ListDepartments listDepartments, ListUsers listUsers) {
-        if (companyRepository.findByAddress(company.getAddress()) == null) {
-            company = companyRepository.save(company);
-            Map<Integer, Integer> fids = new HashMap<>();
-            for (Department department : listDepartments.getDepartments()) {
-                department.setCompanyId(company.getId());
-                int depFID = fids.getOrDefault(department.getParentID(), 0);
-                int bId = department.getId();
-                department.setParentID(depFID);
-                department = departmentRepository.save(department);
-                fids.putIfAbsent(bId, department.getFid());
-            }
-            for (User user :
-                    listUsers.getUsers()) {
-                user.setDepartment(fids.get(user.getDepartment()));
-                user = userRepository.save(user);
-            }
-        }
     }
 }

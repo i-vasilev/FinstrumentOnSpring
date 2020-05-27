@@ -1,14 +1,16 @@
-package ru.momentum.finstrument.mvc.model.entity;
+package ru.momentum.finstrument.core.entity;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "Executors")
-public class User {
+@NoArgsConstructor
+public class Employee {
 
     @Transient
     @SerializedName("ID")
@@ -23,7 +25,7 @@ public class User {
 
     private boolean isActive;
 
-    public User(int ID, int department, boolean isActive) {
+    public Employee(int ID, int department, boolean isActive) {
         this.ID = ID;
         this.department = department;
         this.isActive = isActive;

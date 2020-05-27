@@ -1,7 +1,7 @@
-package ru.momentum.finstrument.mvc.model.data;
+package ru.momentum.finstrument.core.db.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import ru.momentum.finstrument.mvc.model.entity.Company;
+import ru.momentum.finstrument.core.entity.Company;
 
 /**
  * Company's CrudRepository. Allow to operate with table companies in database.

@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>My instrument</title>
+    <style>
+        div {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<form action="getCode" method="post">
+    <div><label>Domain Bitrix: <input type="text" name="domain"/></label></div>
+    <div><label>Application ID: <input type="text" name="appId"/></label></div>
+    <div><label>Secret ID: <input type="text" name="clientSecret"/></label></div>
+    <button type="submit" class="button" name="cmd" value="start">Send data</button>
+</form>
+
+</body>
+
+</html>

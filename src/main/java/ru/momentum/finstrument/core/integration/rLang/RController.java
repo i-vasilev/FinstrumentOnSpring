@@ -1,8 +1,6 @@
-package ru.momentum.finstrument.core;
+package ru.momentum.finstrument.core.integration.rLang;
 
 import org.rosuda.REngine.REXP;
-import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.REngine;
 import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.Rserve.RserveException;
 

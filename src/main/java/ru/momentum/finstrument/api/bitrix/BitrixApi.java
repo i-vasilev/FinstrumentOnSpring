@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 import ru.momentum.finstrument.api.Api;
 import ru.momentum.finstrument.api.bitrix.credentials.AuthCredentials;
 import ru.momentum.finstrument.api.bitrix.credentials.Credentials;
-import ru.momentum.finstrument.api.bitrix.data.ListDeals;
-import ru.momentum.finstrument.api.bitrix.data.ListDepartments;
-import ru.momentum.finstrument.api.bitrix.data.ListUsers;
-import ru.momentum.finstrument.api.bitrix.deserializer.UserDeserializer;
+import ru.momentum.finstrument.core.entity.ListDeals;
+import ru.momentum.finstrument.core.entity.ListDepartments;
+import ru.momentum.finstrument.core.entity.ListEmployees;
+import ru.momentum.finstrument.api.bitrix.deserializer.EmployeeDeserializer;
 import ru.momentum.finstrument.api.bitrix.httpClient.BitrixApiException;
 import ru.momentum.finstrument.api.bitrix.httpClient.BitrixClientImpl;
 import ru.momentum.finstrument.api.bitrix.httpClient.BitrixHttpClient;
-import ru.momentum.finstrument.mvc.model.entity.User;
+import ru.momentum.finstrument.core.entity.Employee;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class BitrixApi implements Api {
     public BitrixApi() {
         bitrixHttpClient = new BitrixHttpClient();
         GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(User.class, new UserDeserializer());
+        builder.registerTypeAdapter(Employee.class, new EmployeeDeserializer());
         gson = builder.create();
     }
 
@@ -45,11 +45,11 @@ public class BitrixApi implements Api {
     }
 
     @Override
-    public ListUsers loadListUsers() throws BitrixApiException {
+    public ListEmployees loadListEmployees() throws BitrixApiException {
         BitrixClientImpl bitrixClient = new BitrixClientImpl(bitrixHttpClient, credentials);
         String result = bitrixClient.execute("user.get", new ArrayList<>());
 
-        return gson.fromJson(result, ListUsers.class);
+        return gson.fromJson(result, ListEmployees.class);
     }
 
     @Override
