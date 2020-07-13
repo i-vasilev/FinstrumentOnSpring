@@ -6,6 +6,7 @@ import org.apache.http.entity.ContentType;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.momentum.finstrument.api.bitrix.exceptions.BitrixApiException;
 import ru.momentum.finstrument.api.bitrix.exceptions.BitrixApiHttpException;
 import ru.momentum.finstrument.api.bitrix.exceptions.UnauthorizedBitrixApiException;
 import ru.momentum.finstrument.api.bitrix.response.BitrixResponse;
@@ -15,6 +16,7 @@ import ru.momentum.finstrument.api.bitrix.response.SuccessBitrixResponse;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +24,7 @@ public class BitrixHttpClient {
     public static final Logger logger = LoggerFactory.getLogger(BitrixHttpClient.class);
 
     public static final int TIMEOUT = 30000;
-    public static final Charset UTF_8 = Charset.forName("UTF-8");
+    public static final Charset UTF_8 = StandardCharsets.UTF_8;
 
     private final boolean logResponse;
 

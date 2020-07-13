@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>List of your companies</title>
+</head>
+<body>
+
+<a href="/addCompany">Добавить компанию</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Address</th>
+    </tr>
+    <!--/*@thymesVar id="companies" type="java.util.List<ru.momentum.finstrument.core.entity.Company>"*/-->
+    <tr th:each="company : ${companies}">
+        <td th:text="${company.id}"></td>
+        <td th:text="${company.address}"></td>
+    </tr>
+</table>
+</body>
+</html>

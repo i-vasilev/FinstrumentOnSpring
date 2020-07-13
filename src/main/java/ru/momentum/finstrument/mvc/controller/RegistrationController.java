@@ -1,45 +1,63 @@
 package ru.momentum.finstrument.mvc.controller;
 
+import org.springframework.web.bind.annotation.*;
 import ru.momentum.finstrument.core.entity.User;
 import ru.momentum.finstrument.mvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Calendar;
+import java.util.Locale;
 
 @Controller
 public class RegistrationController {
 
+    public static final String REGISTRATION = "registration";
     @Autowired
     private UserService userService;
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        model.addAttribute("userForm", new User());
+        model.addAttribute("user", new User());
 
-        return "registration";
+        return REGISTRATION;
     }
 
     @PostMapping("/registration")
-    public String addUser(@ModelAttribute("userForm") @Valid User userForm, BindingResult bindingResult, Model model) {
+    public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
-            return "registration";
+            model.addAttribute("user", new User());
+            return REGISTRATION;
         }
-        if (!userForm.getPassword().equals(userForm.getPasswordConfirm())){
+        if (!user.getPassword().equals(user.getPasswordConfirm())) {
+            model.addAttribute("user", new User());
             model.addAttribute("passwordError", "Пароли не совпадают");
-            return "registration";
+            return REGISTRATION;
         }
-        if (!userService.saveUser(userForm)){
+        if (!userService.saveUser(user)) {
+            model.addAttribute("user", new User());
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
-            return "registration";
+            return REGISTRATION;
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping("/activate/{code}")
+    public String activate(Model model, @PathVariable String code) {
+        final boolean isActivated = userService.activateUser(code);
+
+        if (!isActivated) {
+            model.addAttribute("message", "User successfully activated");
+        } else {
+            model.addAttribute("message", "Activation code is not found!");
+        }
+
+        return "login";
     }
 }

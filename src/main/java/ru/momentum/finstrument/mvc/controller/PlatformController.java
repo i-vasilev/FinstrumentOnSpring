@@ -13,7 +13,7 @@ import ru.momentum.finstrument.api.bitrix.BitrixApi;
 import ru.momentum.finstrument.core.entity.ListDeals;
 import ru.momentum.finstrument.core.entity.ListDepartments;
 import ru.momentum.finstrument.core.entity.ListEmployees;
-import ru.momentum.finstrument.api.bitrix.httpClient.BitrixApiException;
+import ru.momentum.finstrument.api.bitrix.exceptions.BitrixApiException;
 import ru.momentum.finstrument.core.db.DBController;
 import ru.momentum.finstrument.core.entity.Company;
 
@@ -47,6 +47,7 @@ public class PlatformController {
     }
 
     @GetMapping("/")
+    @PostMapping("/")
     public String indexPage() {
         return INDEX;
     }

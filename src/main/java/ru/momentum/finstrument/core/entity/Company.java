@@ -21,7 +21,7 @@ public class Company {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "user")
+    @ManyToOne
     private User user;
 
     public Company(String address) {

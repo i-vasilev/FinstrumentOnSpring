@@ -5,6 +5,9 @@ import ru.momentum.finstrument.core.entity.Employee;
 
 import java.lang.reflect.Type;
 
+/**
+ * Deserializer for json Employee entity.
+ */
 public class EmployeeDeserializer implements JsonDeserializer<Employee> {
     @Override
     public Employee deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {

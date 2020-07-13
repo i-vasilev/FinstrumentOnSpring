@@ -1,7 +1,5 @@
 package ru.momentum.finstrument.api.bitrix.exceptions;
 
-import ru.momentum.finstrument.api.bitrix.httpClient.BitrixApiException;
-
 public class BitrixApiHttpException extends BitrixApiException {
     private final int status;
 

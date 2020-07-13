@@ -1,4 +1,4 @@
-package ru.momentum.finstrument.api.bitrix.httpClient;
+package ru.momentum.finstrument.api.bitrix.exceptions;
 
 public class BitrixApiException extends Exception {
     public BitrixApiException(Throwable cause) {
