@@ -18,16 +18,13 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "t_user")
-public class User implements UserDetails {
+public class User implements UserDetails, Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    @NotEmpty
+    @Size(min = 2, message = "Не меньше 5 знаков")
     private String email;
-    @Size(min=2, message = "Не меньше 5 знаков")
-    private String username;
-    @Size(min=2, message = "Не меньше 5 знаков")
+    @Size(min = 2, message = "Не меньше 5 знаков")
     private String password;
 
     private String firstName;
@@ -42,17 +39,9 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -76,7 +65,7 @@ public class User implements UserDetails {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.email = username;
     }
 
     @Override
@@ -109,14 +98,6 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -139,5 +120,16 @@ public class User implements UserDetails {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
+    }
+
+    @Override
+    public User clone() {
+        final User user = new User();
+
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setUsername(email);
+
+        return user;
     }
 }

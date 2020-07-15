@@ -3,7 +3,7 @@ package ru.momentum.finstrument.api.bitrix.credentials;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Credentials to connect to some REST API with Auth API 2.0
+ * Credentials to connect to some REST API with Auth API 2.0.
  */
 public class AuthCredentials implements Credentials {
     @SerializedName("access_token")
@@ -16,8 +16,8 @@ public class AuthCredentials implements Credentials {
     /**
      * Creates {@link AuthCredentials}'s instance with filled tokens and client endpoint (Bitrix's name).
      *
-     * @param accessToken access token to connecting to Bitrix.
-     * @param refreshToken refresh token to connecting to Bitrix.
+     * @param accessToken    access token to connecting to Bitrix.
+     * @param refreshToken   refresh token to connecting to Bitrix.
      * @param clientEndpoint client endpoint to connecting to Bitrix.
      */
     public AuthCredentials(String accessToken, String refreshToken, String clientEndpoint) {

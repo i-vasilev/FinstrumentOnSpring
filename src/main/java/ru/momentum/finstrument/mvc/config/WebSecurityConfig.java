@@ -1,6 +1,7 @@
 package ru.momentum.finstrument.mvc.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -33,13 +34,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 //Доступ только для не зарегистрированных пользователей
                 .antMatchers("/registration", "/activate/*").not().fullyAuthenticated()
                 //Доступ только для пользователей с ролью Администратор
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/news").hasAuthority("USER")
                 //Доступ разрешен всем пользователей
-                .antMatchers("/", "/resources/**").permitAll()
+                .antMatchers("/", "/resources/**", "/public/**").permitAll()
                 //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated()
                 .and()
@@ -52,7 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+        ;
 //        httpSecurity
 //                .authorizeRequests()
 //                    .antMatchers("/", "/registration", "/activate/*").permitAll()
@@ -65,6 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                    .logout()
 //                    .permitAll();
     }
+
 
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

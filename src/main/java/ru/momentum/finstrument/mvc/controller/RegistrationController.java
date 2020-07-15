@@ -1,17 +1,17 @@
 package ru.momentum.finstrument.mvc.controller;
 
-import org.springframework.web.bind.annotation.*;
-import ru.momentum.finstrument.core.entity.User;
-import ru.momentum.finstrument.mvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import ru.momentum.finstrument.core.entity.User;
+import ru.momentum.finstrument.mvc.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Calendar;
-import java.util.Locale;
 
 @Controller
 public class RegistrationController {
@@ -23,24 +23,31 @@ public class RegistrationController {
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("user", new User());
-
         return REGISTRATION;
+    }
+
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
     }
 
     @PostMapping("/registration")
     public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
 
+        final User userError = user.clone();
         if (bindingResult.hasErrors()) {
-            model.addAttribute("user", new User());
+            model.addAttribute("user", userError);
+            model.addAttribute(bindingResult.getAllErrors());
             return REGISTRATION;
         }
         if (!user.getPassword().equals(user.getPasswordConfirm())) {
-            model.addAttribute("user", new User());
-            model.addAttribute("passwordError", "Пароли не совпадают");
+            model.addAttribute("user", userError);
+            model.addAttribute("passwordConfirmError", "Пароли не совпадают");
             return REGISTRATION;
         }
         if (!userService.saveUser(user)) {
-            model.addAttribute("user", new User());
+            model.addAttribute("user", userError);
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
             return REGISTRATION;
         }

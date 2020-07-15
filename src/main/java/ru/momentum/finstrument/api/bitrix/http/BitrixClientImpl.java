@@ -1,4 +1,4 @@
-package ru.momentum.finstrument.api.bitrix.httpClient;
+package ru.momentum.finstrument.api.bitrix.http;
 
 import org.apache.http.NameValuePair;
 import ru.momentum.finstrument.api.bitrix.credentials.Credentials;

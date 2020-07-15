@@ -2,10 +2,10 @@ package ru.momentum.finstrument.api;
 
 import org.springframework.stereotype.Component;
 import ru.momentum.finstrument.api.bitrix.credentials.Credentials;
+import ru.momentum.finstrument.api.bitrix.exceptions.BitrixApiException;
 import ru.momentum.finstrument.core.entity.ListDeals;
 import ru.momentum.finstrument.core.entity.ListDepartments;
 import ru.momentum.finstrument.core.entity.ListEmployees;
-import ru.momentum.finstrument.api.bitrix.exceptions.BitrixApiException;
 
 @Component
 public interface Api {

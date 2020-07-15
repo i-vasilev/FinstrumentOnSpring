@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByEmail(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -45,7 +45,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean saveUser(User user) {
-        User userFromDB = userRepository.findByUsername(user.getUsername());
+        User userFromDB = userRepository.findByEmail(user.getUsername());
         
         if (userFromDB != null) {
             return false;
@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
                         "Welcome to Finstrument. Please, visit next link: http://localhost:8080/activate/%s",
                 user.getUsername(), user.getActivationCode());
 
-        mailSender.send(user.getEmail(), "Activation code", message);
+        mailSender.send(user.getUsername(), "Activation code", message);
 
         return true;
     }
