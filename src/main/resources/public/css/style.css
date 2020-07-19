@@ -1,3 +1,74 @@
-body {
-    background-color: cornsilk;
+.logo {
+    color: #009507;
+    font-family: "Arial Black", serif;
+    font-size: 40pt;
+    display: inline;
+    margin-right: 200px;
+}
+
+.logoFirstLetter {
+    color: #21d104;
+}
+
+
+ul.menu {
+    margin: 0;
+    padding: 4px;
+    width: auto;
+    display: inline;
+}
+
+li.menu-item {
+    list-style: none;
+    display: inline;
+    margin-right: 20px;
+    padding: 3px;
+}
+
+li.menu-item a {
+    font-family: "Arial Black", serif;
+    color: #21d104;
+    text-decoration-line: none;
+}
+
+.login {
+    float: right;
+}
+
+.login, .login div {
+    display: inline;
+}
+
+.login div a {
+    color: black;
+    text-decoration-line: none;
+}
+
+form.inputForm {
+    margin: 0 auto;
+    width: 500px;
+}
+
+.input {
+    margin: 10px;
+    font-size: 20pt;
+    font-family: "Arial", serif;
+}
+
+.input input {
+    width: 460px;
+    height: 30px;
+    font-size: inherit;
+}
+
+.sendButton {
+    align-items: center;
+    background-color: #83d477;
+    width: 400px;
+    height: 35px;
+    border: #21d104 1px;
+}
+
+.noDecorating {
+    text-decoration: none;
 }

@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<div class="header">
+    <a class="noDecorating" href="/">
+        <div class="logo"><span class="logoFirstLetter">F</span>Instrument!</div>
+    </a>
+    <ul class="menu">
+        <li class="menu-item"><a href="#" th:text="#{possibilities}"></a></li>
+        <li class="menu-item"><a href="#" th:text="#{support}"></a></li>
+    </ul>
+    <div sec:authorize="isAuthenticated()" class="username">
+        <a href="#">
+            <div sec:authentication="name"></div>
+        </a>
+    </div>
+    <div sec:authorize="!isAuthenticated()" class="login">
+        <div><a href="/login" th:text="#{login}"></a></div>
+        |
+        <div><a href="/registration" th:text="#{register}"></a></div>
+    </div>
+</div>
+</body>
+</html>

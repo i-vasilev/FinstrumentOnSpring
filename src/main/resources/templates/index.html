@@ -5,26 +5,12 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>My instrument</title>
+    <title>FInstrument</title>
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}"/>
-    <style>
-        div {
-            margin: 10px;
-        }
-    </style>
 </head>
 
 <body>
-
-<div class="header"></div>
-<div>Welcome to Finstrument!</div>
-
-<div sec:authorize="isAuthenticated()">
-    <div sec:authentication="name"></div>
-</div>
-<span sec:authorize="!isAuthenticated()">
-    You can <a href="/login">login</a> or <a href="/registration">register</a> to add your company!
-</span>
+    <div th:replace="~{header.html}"></div>
 </body>
 
 </html>

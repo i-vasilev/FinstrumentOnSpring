@@ -7,22 +7,28 @@
 <head>
     <meta charset="utf-8">
     <title>Log in with your account</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}"/>
 </head>
 
 <body>
 <sec:authorize access="isAuthenticated()">
 </sec:authorize>
 <div>
-    <form method="POST" action="/login">
+    <div th:replace="~{header.html}"></div>
+    <form class="inputForm" method="POST" action="/login">
         <h2>Вход в систему</h2>
-        <div>
+        <div class="input">
             <input name="username" type="text" placeholder="Username"
                    autofocus="true"/>
-            <input name="password" type="password" placeholder="Password"/>
-            <button type="submit">Log In</button>
-            <h4><a href="/registration">Зарегистрироваться</a></h4>
         </div>
+        <div class="input">
+            <input name="password" type="password" placeholder="Password"/>
+        </div>
+        <button class="input sendButton" type="submit">Log In</button>
+        <h4><a href="/registration">Зарегистрироваться</a></h4>
     </form>
+</div>
+</form>
 
 </div>
 
